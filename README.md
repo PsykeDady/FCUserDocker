@@ -2,7 +2,7 @@
 
 docker files to start on docker [FCUser](https://github.com/PsykeDady/FCUser) spring app
 
-to start, edit "`avviadocker.sh`" line number 16: 
+to start, edit "`avviadocker.sh`" line number 19: 
 
 ```bash
 MYSQL_PASSWORD=
