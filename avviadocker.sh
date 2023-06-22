@@ -10,8 +10,11 @@ function ctrl_c(){
 
 	docker network rm springmysql
 	echo "Processo terminato!"
+
+	exit 0
 }
 
+trap ctrl_c INT
 
 MYSQL_PASSWORD=
 
@@ -33,7 +36,6 @@ docker container run --network springmysql --name fcuser -p 8080:8080 -d fcuser
 
 docker logs -f fcuser
 
-trap ctrl_c INT
 
 
 ctrl_c
