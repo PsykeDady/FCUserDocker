@@ -4,8 +4,6 @@ function ctrl_c(){
 	echo "terminando il processo...."
 	docker container stop mysqldb
 	docker container stop fcuser
-	
-
 	echo "Processo terminato!"
 
 	exit 0
@@ -32,7 +30,7 @@ runonly () {
 	echo "STARTING "
 	docker container run --network springmysql --name fcuser -p 8080:8080 -d fcuser 
 	docker logs -f fcuser
-	ctrl_c "$@"
+	ctrl_c
 }
 
 
@@ -40,7 +38,7 @@ docker container stop mysqldb
 docker container stop fcuser
 
 if ((runonly==1)); then 
-	runonly 0
+	runonly
 fi
 
 if ((force==1)); then 
@@ -56,4 +54,4 @@ docker container run --name mysqldb --network springmysql -e MYSQL_ROOT_PASSWORD
 
 docker build --build-arg MYSQL_DATABASE=fcuser --build-arg MYSQLDB_ROOT_PASSWORD="${MYSQL_PASSWORD:?}"  -t fcuser . "$forceparam" || exit 255
 
-runonly "$force"
+runonly
