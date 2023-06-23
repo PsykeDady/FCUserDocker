@@ -28,6 +28,7 @@ trap ctrl_c INT
 MYSQL_PASSWORD=
 force=0
 runonly=0
+forceparam=""
 
 while (( $# >0 )); do 
 	case $1 in 
@@ -55,6 +56,6 @@ if ((force==1)); then
 	docker network create springmysql || exit 255
 fi
 
-docker build --build-arg MYSQL_DATABASE=fcuser --build-arg MYSQLDB_ROOT_PASSWORD="${MYSQL_PASSWORD:?}"  -t fcuser . "$forceparam" || exit 255
+docker build --build-arg MYSQL_DATABASE=fcuser --build-arg MYSQLDB_ROOT_PASSWORD="${MYSQL_PASSWORD:?}" "$forceparam"  -t fcuser . || exit 255
 
 runonly "${MYSQL_PASSWORD:?}"
