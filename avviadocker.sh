@@ -4,11 +4,7 @@ function ctrl_c(){
 	echo "terminando il processo...."
 	docker container stop mysqldb
 	docker container stop fcuser
-	if (($#>0)) && (($1==1)); then 
-		docker container rm mysqldb
-		docker container rm fcuser
-		docker network rm springmysql
-	fi
+	
 
 	echo "Processo terminato!"
 
