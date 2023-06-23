@@ -11,8 +11,14 @@ function ctrl_c(){
 
 function runonly () {
 	echo "STARTING "
-	docker container run --name mysqldb --network springmysql -e MYSQL_ROOT_PASSWORD="$1" -e MYSQL_DATABASE=fcuser -d mysql  || exit 255
+	docker container run --name mysqldb --network springmysql -e MYSQL_ROOT_PASSWORD="$1" -e MYSQL_DATABASE=fcuser -d mysql  
+	if (($?!=0)); then
+		docker restart mysqldb || exit 255;
+	fi
 	docker container run --network springmysql --name fcuser -p 8080:8080 -d fcuser 
+	if (($?!=0)); then
+		docker restart fcuser || exit 255;
+	fi
 	docker logs -f fcuser
 	ctrl_c
 }
