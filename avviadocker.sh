@@ -15,7 +15,7 @@ function runonly () {
 	if ! docker container run --name mysqldb --network springmysql -e MYSQL_ROOT_PASSWORD="$1" -e MYSQL_DATABASE=fcuser -d mysql ; then
 		docker restart mysqldb || exit 255;
 	fi
-	
+	sleep 10s # wait to start mysql
 	if ! docker container run --network springmysql --name fcuser -p 8080:8080 -d fcuser ; then
 		docker restart fcuser || exit 255;
 	fi
