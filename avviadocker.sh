@@ -44,11 +44,11 @@ docker container stop mysqldb
 docker container stop fcuser
 
 if ((runonly==1)); then 
-	runonly "$force"
+	runonly 0
 fi
 
 if ((force==1)); then 
-	forceparam="--nocache"
+	forceparam="--no-cache"
 	docker container rm mysqldb
 	docker container rm fcuser
 	docker network rm springmysql
