@@ -56,6 +56,10 @@ if ((force==1)); then
 	docker network create springmysql || exit 255
 fi
 
-docker build --build-arg MYSQL_DATABASE=fcuser --build-arg MYSQLDB_ROOT_PASSWORD="${MYSQL_PASSWORD:?}" "$forceparam"  -t fcuser . || exit 255
+docker build --build-arg MYSQL_DATABASE=fcuser --build-arg MYSQLDB_ROOT_PASSWORD="${MYSQL_PASSWORD:?}" $forceparam  -t fcuser . 
+
+if (($?!=0)); then
+	exit 255
+fi
 
 runonly "${MYSQL_PASSWORD:?}"
