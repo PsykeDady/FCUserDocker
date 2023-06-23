@@ -9,6 +9,14 @@ function ctrl_c(){
 	exit 0
 }
 
+function runonly () {
+	echo "STARTING "
+	docker container run --name mysqldb --network springmysql -e MYSQL_ROOT_PASSWORD="$1" -e MYSQL_DATABASE=fcuser -d mysql  || exit 255
+	docker container run --network springmysql --name fcuser -p 8080:8080 -d fcuser 
+	docker logs -f fcuser
+	ctrl_c
+}
+
 trap ctrl_c INT
 
 MYSQL_PASSWORD=
@@ -26,20 +34,11 @@ while (( $# >0 )); do
 	shift
 done;
 
-runonly () {
-	echo "STARTING "
-	docker container run --name mysqldb --network springmysql -e MYSQL_ROOT_PASSWORD="$1" -e MYSQL_DATABASE=fcuser -d mysql  || exit 255
-	docker container run --network springmysql --name fcuser -p 8080:8080 -d fcuser 
-	docker logs -f fcuser
-	ctrl_c
-}
-
-
 docker container stop mysqldb
 docker container stop fcuser
 
 if ((runonly==1)); then 
-	runonly" ${MYSQL_PASSWORD:?}"
+	runonly "${MYSQL_PASSWORD:?}"
 fi
 
 if ((force==1)); then 
