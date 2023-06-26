@@ -21,6 +21,7 @@ and add the desired mysql password for root user.
 There are three different way to start the script: 
 
 - Simple using `./avviodocker.sh` (from same directory of script) to start building process and container
-- To force rebuilding (and the db complete reset) add `-b` flag: `./avviodocker.sh -b`
+- To force rebuilding (and the db complete reset) add `-f` flag: `./avviodocker.sh -f`
+- To force rebuilding (but no db complete reset) add `-b` flag: `./avviodocker.sh -b`
 - To simple restart stopped container, without any building process, use the `-r` flag: `./avviodocker.sh -r`
 

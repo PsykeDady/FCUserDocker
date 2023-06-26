@@ -27,12 +27,14 @@ trap ctrl_c INT
 
 MYSQL_PASSWORD=
 force=0
+build=0
 runonly=0
 forceparam=""
 
 while (( $# >0 )); do 
 	case $1 in 
 		"-f"|"--force") force=1;;
+		"-b"|"--build") build=1;;
 		"-r"|"--runonly") runonly=1;;
 		*) 
 			echo "bad param $1"
@@ -48,8 +50,11 @@ if ((runonly==1)); then
 	runonly "${MYSQL_PASSWORD:?}"
 fi
 
-if ((force==1)); then 
+if ((force+build>0)); then 
 	forceparam="--no-cache"
+fi
+
+if ((force==1)); then 
 	docker container rm mysqldb
 	docker container rm fcuser
 	docker network rm springmysql
