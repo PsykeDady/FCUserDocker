@@ -52,11 +52,11 @@ fi
 
 if ((force+build>0)); then 
 	forceparam="--no-cache"
+	docker container rm fcuser
 fi
 
 if ((force==1)); then 
 	docker container rm mysqldb
-	docker container rm fcuser
 	docker network rm springmysql
 	docker network create springmysql || exit 255
 else 
